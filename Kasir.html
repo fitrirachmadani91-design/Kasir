@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kasir Voucher Harian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      background: radial-gradient(circle at top left, #9b5cff, #151828 50%, #00d4ff);
+      color: #f5f5f5;
+    }
+    .wrapper {
+      width: 100%;
+      max-width: 480px;
+      margin: 12px auto;
+      padding: 0 10px;
+    }
+    .container {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.8);
+      border-radius: 18px;
+      padding: 16px 14px 18px;
+      box-shadow: 0 14px 32px rgba(0,0,0,0.5);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .header-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+    .header-pill {
+      font-size: 0.7rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #22c55e, #4ade80);
+      color: #052e16;
+      font-weight: 600;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .tagline {
+      font-size: 0.76rem;
+      color: #9ca3af;
+      opacity: 0.95;
+    }
+
+    .card {
+      background: radial-gradient(circle at top, rgba(148, 163, 184, 0.23), rgba(15,23,42,0.96));
+      border-radius: 14px;
+      padding: 10px 10px 12px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.8);
+      margin-bottom: 10px;
+    }
+    .card h2 {
+      margin: 0 0 8px 0;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #a5b4fc;
+    }
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      font-size: 0.82rem;
+    }
+    .row label {
+      flex: 0 0 78px;
+      color: #e2e8f0;
+    }
+    .row input {
+      flex: 1;
+      padding: 6px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15,23,42,0.86);
+      color: #e5e7eb;
+      outline: none;
+      font-size: 0.82rem;
+      transition: border 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+    .row input:focus {
+      border-color: #a855f7;
+      box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.45);
+      background: rgba(15,23,42,1);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 6px 0 10px;
+    }
+    .btn-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+    button {
+      border: none;
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-size: 0.83rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.15s ease;
+      outline: none;
+    }
+    button.primary {
+      background: linear-gradient(135deg, #a855f7, #3b82f6);
+      color: #f9fafb;
+      box-shadow: 0 8px 18px rgba(59,130,246,0.5);
+      flex: 1;
+    }
+    button.secondary {
+      background: rgba(15,23,42,0.95);
+      color: #e5e7eb;
+      border: 1px solid rgba(148,163,184,0.7);
+    }
+    button:active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow: none;
+    }
+
+    .hasil {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .panel {
+      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.24), rgba(15,23,42,0.96));
+      border-radius: 14px;
+      padding: 10px 10px 9px;
+      border: 1px solid rgba(56, 189, 248, 0.7);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.85);
+      font-size: 0.83rem;
+    }
+    .panel h3 {
+      margin: 0 0 6px 0;
+      font-size: 0.84rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #a5b4fc;
+    }
+    .hasil-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 3px;
+      color: #e5e7eb;
+    }
+    .hasil-row span.label {
+      color: #94a3b8;
+    }
+    .divider {
+      height: 1px;
+      margin: 6px 0;
+      background: linear-gradient(to right, transparent, rgba(148,163,184,0.8), transparent);
+    }
+    .total {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #facc15;
+    }
+    .danger {
+      color: #fb7185;
+    }
+    .success {
+      color: #4ade80;
+    }
+
+    @media (min-width: 600px) {
+      .wrapper {
+        max-width: 520px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <div class="header">
+        <div>
+          <div class="header-title">Kasir Voucher Harian</div>
+          <div class="tagline">Hitung stok, penjualan, dan kembalian langsung dari HP.</div>
+        </div>
+        <div class="header-pill">Mobile</div>
+      </div>
+
+      <!-- INPUT VOUCHER 5K -->
+      <div class="card">
+        <h2>Voucher 5.000</h2>
+        <div class="row">
+          <label for="awal5">Awal</label>
+          <input type="number" id="awal5" value="0" min="0"
+                 onfocus="clearZero(this)" onblur="restoreZero(this)">
+        </div>
+        <div class="row">
+          <label for="laku5">Laku</label>
+          <input type="number" id="laku5" value="0" min="0"
+                 onfocus="clearZero(this)" onblur="restoreZero(this)">
+        </div>
+        <div class="row">
+          <label for="tambah5">Tambah</label>
+          <input type="number" id="tambah5" value="0" min="0"
+                 onfocus="clearZero(this)" onblur="restoreZero(this)">
+        </div>
+      </div>
+
+      <!-- INPUT VOUCHER 20K -->
+      <div class="card">
+        <h2>Voucher 20.000</h2>
+        <div class="row">
+          <label for="awal20">Awal</label>
+          <input type="number" id="awal20" value="0" min="0"
+                 onfocus="clearZero(this)" onblur="restoreZero(this)">
+        </div>
+        <div class="row">
+          <label for="laku20">Laku</label>
+          <input type="number" id="laku20" value="0" min="0"
+                 onfocus="clearZero(this)" onblur="restoreZero(this)">
+        </div>
+        <div class="row">
+          <label for="tambah20">Tambah</label>
+          <input type="number" id="tambah20" value="0" min="0"
+                 onfocus="clearZero(this)" onblur="restoreZero(this)">
+        </div>
+      </div>
+
+      <!-- INPUT VOUCHER 50K -->
+      <div class="card">
+        <h2>Voucher 50.000</h2>
+        <div class="row">
+          <label for="awal50">Awal</label>
+          <input type="number" id="awal50" value="0" min="0"
+                 onfocus="clearZero(this)" onblur="restoreZero(this)">
+        </div>
+        <div class="row">
+          <label for="laku50">Laku</label>
+          <input type="number" id="laku50" value="0" min="0"
+                 onfocus="clearZero(this)" onblur="restoreZero(this)">
+        </div>
+        <div class="row">
+          <label for="tambah50">Tambah</label>
+          <input type="number" id="tambah50" value="0" min="0"
+                 onfocus="clearZero(this)" onblur="restoreZero(this)">
+        </div>
+      </div>
+
+      <!-- AKSI & UANG BAYAR -->
+      <div class="actions">
+        <div class="btn-group">
+          <button class="primary" onclick="hitung()">
+            🔢 Hitung
+          </button>
+          <button class="secondary" onclick="resetForm()">
+            ♻️ Reset
+          </button>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom:10px;">
+        <label for="uangDiberikanView">Uang bayar</label>
+        <input
+          type="text"
+          id="uangDiberikanView"
+          value="0"
+          placeholder="contoh: 900.000"
+          onfocus="clearZero(this)"
+          onblur="restoreZero(this)"
+          onkeyup="formatUangBayar(this)"
+        >
+      </div>
+
+      <!-- HASIL -->
+      <div class="hasil">
+        <div class="panel">
+          <h3>Ringkasan Voucher</h3>
+          <div id="hasilVoucher">
+            <div class="tagline">Isi data di atas lalu tekan <strong>Hitung</strong>.</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Uang & Kembalian</h3>
+          <div class="hasil-row">
+            <span class="label">Total penjualan</span>
+            <span id="outTotal">Rp 0</span>
+          </div>
+          <div class="hasil-row">
+            <span class="label">Uang diberikan</span>
+            <span id="outUangDiberikan">Rp 0</span>
+          </div>
+          <div class="divider"></div>
+          <div class="hasil-row">
+            <span class="label">Status</span>
+            <span id="outStatus" class="danger">Belum dihitung</span>
+          </div>
+          <div class="hasil-row">
+            <span class="label">Kembalian</span>
+            <span id="outKembalian">Rp 0</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function formatRupiah(angka) {
+      return angka.toLocaleString('id-ID');
+    }
+
+    function clearZero(el) {
+      if (el.value === "0") {
+        el.value = "";
+      }
+    }
+
+    function restoreZero(el) {
+      if (el.value === "") {
+        el.value = "0";
+      }
+    }
+
+    // Format input uang bayar: 900000 -> 900.000
+    function formatUangBayar(el) {
+      let number_string = el.value.replace(/[^0-9]/g, "");
+      if (number_string === "") {
+        el.value = "";
+        return;
+      }
+      let sisa   = number_string.length % 3;
+      let rupiah = number_string.substr(0, sisa);
+      let ribuan = number_string.substr(sisa).match(/\d{3}/g);
+
+      if (ribuan) {
+        let separator = sisa ? "." : "";
+        rupiah += separator + ribuan.join(".");
+      }
+      el.value = rupiah;
+    }
+
+    function safeInt(id) {
+      return parseInt(document.getElementById(id).value) || 0;
+    }
+
+    function hitung() {
+      // Ambil nilai input voucher
+      let awal5   = safeInt('awal5');
+      let laku5   = safeInt('laku5');
+      let tambah5 = safeInt('tambah5');
+
+      let awal20   = safeInt('awal20');
+      let laku20   = safeInt('laku20');
+      let tambah20 = safeInt('tambah20');
+
+      let awal50   = safeInt('awal50');
+      let laku50   = safeInt('laku50');
+      let tambah50 = safeInt('tambah50');
+
+      // Ambil uang bayar dari field yang sudah diformat
+      let uangView      = document.getElementById('uangDiberikanView').value;
+      let uangDiberikan = parseInt(uangView.replace(/[^0-9]/g, "")) || 0;
+
+      // HITUNG SISA
+      let sisa5  = awal5  - laku5  + tambah5;
+      let sisa20 = awal20 - laku20 + tambah20;
+      let sisa50 = awal50 - laku50 + tambah50;
+
+      // HITUNG PENJUALAN
+      let jual5  = laku5  * 4000;
+      let jual20 = laku20 * 19000;
+      let jual50 = laku50 * 49000;
+      let total  = jual5 + jual20 + jual50;
+
+      // Hitung kembalian
+      let kembalian = uangDiberikan - total;
+
+      // Ringkasan voucher
+      let html = `
+        <div class="hasil-row">
+          <span class="label">V5 - sisa</span>
+          <span>${sisa5} lembar</span>
+        </div>
+        <div class="hasil-row">
+          <span class="label">V5 - penjualan</span>
+          <span>Rp ${formatRupiah(jual5)}</span>
+        </div>
+        <div class="divider"></div>
+        <div class="hasil-row">
+          <span class="label">V20 - sisa</span>
+          <span>${sisa20} lembar</span>
+        </div>
+        <div class="hasil-row">
+          <span class="label">V20 - penjualan</span>
+          <span>Rp ${formatRupiah(jual20)}</span>
+        </div>
+        <div class="divider"></div>
+        <div class="hasil-row">
+          <span class="label">V50 - sisa</span>
+          <span>${sisa50} lembar</span>
+        </div>
+        <div class="hasil-row">
+          <span class="label">V50 - penjualan</span>
+          <span>Rp ${formatRupiah(jual50)}</span>
+        </div>
+        <div class="divider"></div>
+        <div class="hasil-row total">
+          <span class="label">TOTAL</span>
+          <span>Rp ${formatRupiah(total)}</span>
+        </div>
+      `;
+      document.getElementById('hasilVoucher').innerHTML = html;
+
+      // Panel uang & kembalian
+      document.getElementById('outTotal').textContent = "Rp " + formatRupiah(total);
+      document.getElementById('outUangDiberikan').textContent = "Rp " + formatRupiah(uangDiberikan);
+      document.getElementById('outKembalian').textContent = "Rp " + formatRupiah(Math.abs(kembalian));
+
+      let statusEl = document.getElementById('outStatus');
+      if (total === 0) {
+        statusEl.textContent = "Belum ada transaksi";
+        statusEl.className = "danger";
+      } else if (uangDiberikan === 0) {
+        statusEl.textContent = "Belum ada uang bayar";
+        statusEl.className = "danger";
+      } else if (kembalian < 0) {
+        statusEl.textContent = "Uang kurang Rp " + formatRupiah(-kembalian);
+        statusEl.className = "danger";
+      } else if (kembalian === 0) {
+        statusEl.textContent = "Pas, mantap ✅";
+        statusEl.className = "success";
+      } else {
+        statusEl.textContent = "Kembalian siap dikasih";
+        statusEl.className = "success";
+      }
+    }
+
+    function resetForm() {
+      const ids = [
+        'awal5','laku5','tambah5',
+        'awal20','laku20','tambah20',
+        'awal50','laku50','tambah50'
+      ];
+      ids.forEach(id => document.getElementById(id).value = "0");
+
+      document.getElementById('uangDiberikanView').value = "0";
+
+      document.getElementById('hasilVoucher').innerHTML =
+        '<div class="tagline">Isi data di atas lalu tekan <strong>Hitung</strong>.</div>';
+
+      document.getElementById('outTotal').textContent = "Rp 0";
+      document.getElementById('outUangDiberikan').textContent = "Rp 0";
+      document.getElementById('outKembalian').textContent = "Rp 0";
+      let statusEl = document.getElementById('outStatus');
+      statusEl.textContent = "Belum dihitung";
+      statusEl.className = "danger";
+    }
+  </script>
+</body>
+</html>
