@@ -1,484 +1,447 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF=UTF-8">
   <title>Kasir Voucher Harian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     * {
       box-sizing: border-box;
     }
+
+    /* BACKGROUND GRADIENT ANIMATED */
     body {
       margin: 0;
       min-height: 100vh;
       font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       display: flex;
-      align-items: stretch;
       justify-content: center;
-      background: radial-gradient(circle at top left, #9b5cff, #151828 50%, #00d4ff);
-      color: #f5f5f5;
-    }
-    .wrapper {
-      width: 100%;
-      max-width: 480px;
-      margin: 12px auto;
-      padding: 0 10px;
-    }
-    .container {
-      width: 100%;
-      background: rgba(15, 23, 42, 0.8);
-      border-radius: 18px;
-      padding: 16px 14px 18px;
-      box-shadow: 0 14px 32px rgba(0,0,0,0.5);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-    }
-    .header {
-      display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 6px;
-      margin-bottom: 12px;
-    }
-    .header-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-    }
-    .header-pill {
-      font-size: 0.7rem;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #22c55e, #4ade80);
-      color: #052e16;
-      font-weight: 600;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-    .tagline {
-      font-size: 0.76rem;
-      color: #9ca3af;
-      opacity: 0.95;
+      padding: 24px 12px;
+      background: linear-gradient(-45deg, #7c3aed, #0f172a, #06b6d4, #14b8a6);
+      background-size: 300% 300%;
+      animation: bg-move 22s ease infinite;
+      color: #f9fafb;
     }
 
-    .card {
-      background: radial-gradient(circle at top, rgba(148, 163, 184, 0.23), rgba(15,23,42,0.96));
-      border-radius: 14px;
-      padding: 10px 10px 12px;
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.8);
-      margin-bottom: 10px;
+    @keyframes bg-move {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
-    .card h2 {
-      margin: 0 0 8px 0;
-      font-size: 0.9rem;
-      letter-spacing: 0.08em;
+
+    .sheet-wrapper {
+      width: 100%;
+      max-width: 440px;
+      padding: 4px;
+    }
+
+    .sheet {
+      width: 100%;
+      border-radius: 26px;
+      padding: 16px 16px 18px;
+      background: rgba(15,23,42,0.80);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border: 1px solid rgba(148,163,184,0.55);
+      box-shadow:
+        0 22px 55px rgba(15,23,42,0.95),
+        0 0 0 1px rgba(15,23,42,0.65);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sheet::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at top left,
+                  rgba(129, 140, 248, 0.22),
+                  transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    /* JUDUL – LEBIH TERANG & MENYALA */
+    h1 {
+      font-size: 1.1rem;
+      text-align: center;
+      margin: 0 0 4px;
+      letter-spacing: 0.11em;
       text-transform: uppercase;
-      color: #a5b4fc;
+      color: #ffffff;
+      text-shadow:
+        0 0 10px rgba(129,140,248,0.9),
+        0 0 18px rgba(56,189,248,0.75);
     }
-    .row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 6px;
-      font-size: 0.82rem;
-    }
-    .row label {
-      flex: 0 0 78px;
-      color: #e2e8f0;
-    }
-    .row input {
-      flex: 1;
-      padding: 6px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      background: rgba(15,23,42,0.86);
+    .sub-title {
+      font-size: 0.74rem;
+      text-align: center;
+      margin-bottom: 12px;
       color: #e5e7eb;
+      text-transform: lowercase;
+      opacity: 0.9;
+    }
+
+    /* LABEL BAGIAN – WARNA LEBIH TERANG */
+    .section-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      margin-top: 10px;
+      text-transform: capitalize;
+      background: linear-gradient(90deg,
+                    rgba(248, 250, 252, 0.20),
+                    rgba(129, 140, 248, 0.80),
+                    rgba(56, 189, 248, 0.85));
+      border-radius: 999px;
+      border: 1px solid rgba(191, 219, 254, 0.95);
+      color: #0f172a;
+      display: inline-block;
+      box-shadow:
+        0 6px 14px rgba(15,23,42,0.9),
+        0 0 12px rgba(56,189,248,0.75);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      margin-top: 5px;
+    }
+    td {
+      border-bottom: 1px solid rgba(30,64,175,0.35);
+      padding: 5px 4px;
+      background: transparent;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* LABEL VOUCHER – UNGU MUDA (BUKAN PUTIH/HITAM) */
+    td.label {
+      width: 45%;
+      color: #e9d5ff;        /* ungu muda / lilac */
+      padding-left: 2px;
+      text-transform: capitalize;
+    }
+
+    .cell-input,
+    .cell-output {
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+    input {
+      width: 100%;
+      border: none;
       outline: none;
       font-size: 0.82rem;
-      transition: border 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-    }
-    .row input:focus {
-      border-color: #a855f7;
-      box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.45);
-      background: rgba(15,23,42,1);
+      padding: 5px 9px;
+      background: transparent;
+      color: #f9fafb;
     }
 
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 6px 0 10px;
+    /* INPUT BISA DIISI */
+    .editable {
+      background: radial-gradient(circle at top left,
+                    rgba(248,250,252,0.12),
+                    rgba(15,23,42,0.96));
+      box-shadow:
+        inset 0 0 0 1px rgba(148,163,184,0.55),
+        0 3px 9px rgba(15,23,42,0.95);
+      transition: box-shadow 0.18s ease, transform 0.18s ease;
     }
-    .btn-group {
+    .editable input {
+      color: #f9fafb;
+    }
+    .editable input:focus {
+      outline: none;
+      box-shadow: 0 0 0 1px rgba(96,165,250,0.9);
+      background: rgba(15,23,42,0.94);
+    }
+    .editable:focus-within {
+      box-shadow:
+        0 0 0 1px rgba(129,140,248,0.95),
+        0 0 18px rgba(59,130,246,0.65);
+      transform: translateY(-1px);
+    }
+
+    /* OUTPUT OTOMATIS – BADGE BIRU LEBIH TERANG & ANIMASI HALUS */
+    .readonly {
+      background: linear-gradient(120deg, #60a5fa, #22c1c3, #38bdf8);
+      background-size: 200% 200%;
+      animation: pill-move 8s ease-in-out infinite;
+      box-shadow:
+        0 4px 12px rgba(15,23,42,0.9),
+        0 0 0 1px rgba(191,219,254,0.95);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .readonly input {
+      pointer-events: none;
+      color: #0f172a;
+      font-weight: 600;
+      text-align: right;
+    }
+    .readonly:hover {
+      transform: translateY(-1px);
+      box-shadow:
+        0 6px 16px rgba(15,23,42,0.95),
+        0 0 0 1px rgba(248,250,252,1);
+    }
+
+    @keyframes pill-move {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* TOMBOL RESET – NEON, LEBIH MENYALA */
+    .btn-row {
+      margin-top: 12px;
       display: flex;
+      justify-content: flex-end;
       gap: 8px;
-      flex-wrap: wrap;
-      flex: 1;
     }
     button {
       border: none;
-      padding: 7px 16px;
       border-radius: 999px;
-      font-size: 0.83rem;
-      font-weight: 500;
+      padding: 7px 18px;
+      font-size: 0.8rem;
       cursor: pointer;
+      font-weight: 500;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 4px;
-      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.15s ease;
-      outline: none;
-    }
-    button.primary {
-      background: linear-gradient(135deg, #a855f7, #3b82f6);
-      color: #f9fafb;
-      box-shadow: 0 8px 18px rgba(59,130,246,0.5);
-      flex: 1;
-    }
-    button.secondary {
-      background: rgba(15,23,42,0.95);
-      color: #e5e7eb;
-      border: 1px solid rgba(148,163,184,0.7);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.7);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
     }
     button:active {
-      transform: translateY(1px) scale(0.99);
-      box-shadow: none;
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 0 4px 10px rgba(15,23,42,0.9);
+    }
+    .btn-secondary {
+      background: radial-gradient(circle at top left, #a7f3d0, #22c55e);
+      color: #064e3b;
+      box-shadow:
+        0 0 12px rgba(52,211,153,0.9),
+        0 8px 18px rgba(15,23,42,0.7);
+    }
+    .btn-secondary:hover {
+      background: radial-gradient(circle at top left, #bbf7d0, #22c55e);
+      box-shadow:
+        0 0 18px rgba(52,211,153,1),
+        0 10px 22px rgba(15,23,42,0.9);
     }
 
-    .hasil {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .panel {
-      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.24), rgba(15,23,42,0.96));
-      border-radius: 14px;
-      padding: 10px 10px 9px;
-      border: 1px solid rgba(56, 189, 248, 0.7);
-      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.85);
-      font-size: 0.83rem;
-    }
-    .panel h3 {
-      margin: 0 0 6px 0;
-      font-size: 0.84rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #a5b4fc;
-    }
-    .hasil-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 3px;
+    .hint {
+      font-size: 0.72rem;
       color: #e5e7eb;
-    }
-    .hasil-row span.label {
-      color: #94a3b8;
-    }
-    .divider {
-      height: 1px;
-      margin: 6px 0;
-      background: linear-gradient(to right, transparent, rgba(148,163,184,0.8), transparent);
-    }
-    .total {
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: #facc15;
-    }
-    .danger {
-      color: #fb7185;
-    }
-    .success {
-      color: #4ade80;
+      margin-top: 6px;
+      text-align: right;
     }
 
-    @media (min-width: 600px) {
-      .wrapper {
-        max-width: 520px;
+    @media (max-width: 480px) {
+      body {
+        padding: 16px 8px;
+      }
+      .sheet {
+        border-radius: 20px;
+        padding: 12px 12px 14px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="wrapper">
-    <div class="container">
-      <div class="header">
-        <div>
-          <div class="header-title">Kasir</div>
-          <div class="tagline">Hitung stok, penjualan, dan kembalian langsung dari HP.</div>
-        </div>
-        <div class="header-pill">Mobile</div>
+  <div class="sheet-wrapper">
+    <div class="sheet">
+      <h1>MathSolver</h1>
+
+      <!-- JUMLAH AWAL VOUCHER -->
+      <div class="section-title">Jumlah Awal Voucher</div>
+      <table>
+        <tr>
+          <td class="label">Voucher 5</td>
+          <td class="cell-input editable">
+            <input type="number" id="awal5" value="0"
+                   onfocus="clearZero(this)" onblur="restoreZero(this)" oninput="hitung()">
+          </td>
+        </tr>
+        <tr>
+          <td class="label">Voucher 20</td>
+          <td class="cell-input editable">
+            <input type="number" id="awal20" value="0"
+                   onfocus="clearZero(this)" onblur="restoreZero(this)" oninput="hitung()">
+          </td>
+        </tr>
+      </table>
+
+      <!-- SISA VOUCHER -->
+      <div class="section-title">Sisa Voucher</div>
+      <table>
+        <tr>
+          <td class="label">Voucher 5</td>
+          <td class="cell-input editable">
+            <input type="number" id="sisa5" value="0"
+                   onfocus="clearZero(this)" onblur="restoreZero(this)" oninput="hitung()">
+          </td>
+        </tr>
+        <tr>
+          <td class="label">Voucher 20</td>
+          <td class="cell-input editable">
+            <input type="number" id="sisa20" value="0"
+                   onfocus="clearZero(this)" onblur="restoreZero(this)" oninput="hitung()">
+          </td>
+        </tr>
+      </table>
+
+      <!-- LAKU (OUTPUT) -->
+      <div class="section-title">Laku</div>
+      <table>
+        <tr>
+          <td class="label">Voucher 5</td>
+          <td class="cell-output readonly">
+            <input type="text" id="laku5" value="0" readonly>
+          </td>
+        </tr>
+        <tr>
+          <td class="label">Voucher 20</td>
+          <td class="cell-output readonly">
+            <input type="text" id="laku20" value="0" readonly>
+          </td>
+        </tr>
+      </table>
+
+      <!-- PEMBAYARAN (OUTPUT) -->
+      <div class="section-title">Pembayaran</div>
+      <table>
+        <tr>
+          <td class="label">Voucher 5</td>
+          <td class="cell-output readonly">
+            <input type="text" id="bayar5" value="Rp 0" readonly>
+          </td>
+        </tr>
+        <tr>
+          <td class="label">Voucher 20</td>
+          <td class="cell-output readonly">
+            <input type="text" id="bayar20" value="Rp 0" readonly>
+          </td>
+        </tr>
+        <tr>
+          <td class="label">Total</td>
+          <td class="cell-output readonly">
+            <input type="text" id="bayarTotal" value="Rp 0" readonly>
+          </td>
+        </tr>
+      </table>
+
+      <!-- TAMBAHAN VOUCHER -->
+      <div class="section-title">Tambahan Voucher</div>
+      <table>
+        <tr>
+          <td class="label">Voucher 5</td>
+          <td class="cell-input editable">
+            <input type="number" id="tambah5" value="0"
+                   onfocus="clearZero(this)" onblur="restoreZero(this)" oninput="hitung()">
+          </td>
+        </tr>
+        <tr>
+          <td class="label">Voucher 20</td>
+          <td class="cell-input editable">
+            <input type="number" id="tambah20" value="0"
+                   onfocus="clearZero(this)" onblur="restoreZero(this)" oninput="hitung()">
+          </td>
+        </tr>
+      </table>
+
+      <!-- TOTAL JUMLAH VOUCHER (OUTPUT) -->
+      <div class="section-title">Total Jumlah Voucher</div>
+      <table>
+        <tr>
+          <td class="label">Voucher 5</td>
+          <td class="cell-output readonly">
+            <input type="text" id="totalVoucher5" value="0" readonly>
+          </td>
+        </tr>
+        <tr>
+          <td class="label">Voucher 20</td>
+          <td class="cell-output readonly">
+            <input type="text" id="totalVoucher20" value="0" readonly>
+          </td>
+        </tr>
+      </table>
+
+      <div class="btn-row">
+        <button class="btn-secondary" onclick="resetForm()">♻ Reset</button>
       </div>
 
-      <!-- INPUT VOUCHER 5K -->
-      <div class="card">
-        <h2>Voucher 5.000</h2>
-        <div class="row">
-          <label for="awal5">Awal</label>
-          <input type="number" id="awal5" value="0" min="0"
-                 onfocus="clearZero(this)" onblur="restoreZero(this)">
-        </div>
-        <div class="row">
-          <label for="laku5">Laku</label>
-          <input type="number" id="laku5" value="0" min="0"
-                 onfocus="clearZero(this)" onblur="restoreZero(this)">
-        </div>
-        <div class="row">
-          <label for="tambah5">Tambah</label>
-          <input type="number" id="tambah5" value="0" min="0"
-                 onfocus="clearZero(this)" onblur="restoreZero(this)">
-        </div>
       </div>
-
-      <!-- INPUT VOUCHER 20K -->
-      <div class="card">
-        <h2>Voucher 20.000</h2>
-        <div class="row">
-          <label for="awal20">Awal</label>
-          <input type="number" id="awal20" value="0" min="0"
-                 onfocus="clearZero(this)" onblur="restoreZero(this)">
-        </div>
-        <div class="row">
-          <label for="laku20">Laku</label>
-          <input type="number" id="laku20" value="0" min="0"
-                 onfocus="clearZero(this)" onblur="restoreZero(this)">
-        </div>
-        <div class="row">
-          <label for="tambah20">Tambah</label>
-          <input type="number" id="tambah20" value="0" min="0"
-                 onfocus="clearZero(this)" onblur="restoreZero(this)">
-        </div>
-      </div>
-
-      <!-- INPUT VOUCHER 50K -->
-      <div class="card">
-        <h2>Voucher 50.000</h2>
-        <div class="row">
-          <label for="awal50">Awal</label>
-          <input type="number" id="awal50" value="0" min="0"
-                 onfocus="clearZero(this)" onblur="restoreZero(this)">
-        </div>
-        <div class="row">
-          <label for="laku50">Laku</label>
-          <input type="number" id="laku50" value="0" min="0"
-                 onfocus="clearZero(this)" onblur="restoreZero(this)">
-        </div>
-        <div class="row">
-          <label for="tambah50">Tambah</label>
-          <input type="number" id="tambah50" value="0" min="0"
-                 onfocus="clearZero(this)" onblur="restoreZero(this)">
-        </div>
-      </div>
-
-      <!-- AKSI & UANG BAYAR -->
-      <div class="actions">
-        <div class="btn-group">
-          <button class="primary" onclick="hitung()">
-            🔢 Hitung
-          </button>
-          <button class="secondary" onclick="resetForm()">
-            ♻️ Reset
-          </button>
-        </div>
-      </div>
-      <div class="row" style="margin-bottom:10px;">
-        <label for="uangDiberikanView">Uang bayar</label>
-        <input
-          type="text"
-          id="uangDiberikanView"
-          value="0"
-          placeholder="contoh: 900.000"
-          onfocus="clearZero(this)"
-          onblur="restoreZero(this)"
-          onkeyup="formatUangBayar(this)"
-        >
-      </div>
-
-      <!-- HASIL -->
-      <div class="hasil">
-        <div class="panel">
-          <h3>Ringkasan Voucher</h3>
-          <div id="hasilVoucher">
-            <div class="tagline">Isi data di atas lalu tekan <strong>Hitung</strong>.</div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <h3>Uang & Kembalian</h3>
-          <div class="hasil-row">
-            <span class="label">Total penjualan</span>
-            <span id="outTotal">Rp 0</span>
-          </div>
-          <div class="hasil-row">
-            <span class="label">Uang diberikan</span>
-            <span id="outUangDiberikan">Rp 0</span>
-          </div>
-          <div class="divider"></div>
-          <div class="hasil-row">
-            <span class="label">Status</span>
-            <span id="outStatus" class="danger">Belum dihitung</span>
-          </div>
-          <div class="hasil-row">
-            <span class="label">Kembalian</span>
-            <span id="outKembalian">Rp 0</span>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 
   <script>
-    function formatRupiah(angka) {
-      return angka.toLocaleString('id-ID');
-    }
-
     function clearZero(el) {
-      if (el.value === "0") {
-        el.value = "";
-      }
+      if (el.value === "0") el.value = "";
     }
-
     function restoreZero(el) {
-      if (el.value === "") {
-        el.value = "0";
-      }
+      if (el.value === "") el.value = "0";
     }
-
-    // Format input uang bayar: 900000 -> 900.000
-    function formatUangBayar(el) {
-      let number_string = el.value.replace(/[^0-9]/g, "");
-      if (number_string === "") {
-        el.value = "";
-        return;
-      }
-      let sisa   = number_string.length % 3;
-      let rupiah = number_string.substr(0, sisa);
-      let ribuan = number_string.substr(sisa).match(/\d{3}/g);
-
-      if (ribuan) {
-        let separator = sisa ? "." : "";
-        rupiah += separator + ribuan.join(".");
-      }
-      el.value = rupiah;
+    function toInt(val) {
+      return parseInt(val) || 0;
     }
-
-    function safeInt(id) {
-      return parseInt(document.getElementById(id).value) || 0;
+    function formatRupiah(angka) {
+      return "Rp " + angka.toLocaleString("id-ID");
     }
 
     function hitung() {
-      // Ambil nilai input voucher
-      let awal5   = safeInt('awal5');
-      let laku5   = safeInt('laku5');
-      let tambah5 = safeInt('tambah5');
+      const awal5   = toInt(document.getElementById("awal5").value);
+      const awal20  = toInt(document.getElementById("awal20").value);
+      const sisa5   = toInt(document.getElementById("sisa5").value);
+      const sisa20  = toInt(document.getElementById("sisa20").value);
+      const tambah5 = toInt(document.getElementById("tambah5").value);
+      const tambah20= toInt(document.getElementById("tambah20").value);
 
-      let awal20   = safeInt('awal20');
-      let laku20   = safeInt('laku20');
-      let tambah20 = safeInt('tambah20');
+      // Laku = Awal - Sisa (tambahan tidak masuk pembayaran)
+      const l5  = awal5  - sisa5;
+      const l20 = awal20 - sisa20;
 
-      let awal50   = safeInt('awal50');
-      let laku50   = safeInt('laku50');
-      let tambah50 = safeInt('tambah50');
+      const laku5  = l5  < 0 ? 0 : l5;
+      const laku20 = l20 < 0 ? 0 : l20;
 
-      // Ambil uang bayar dari field yang sudah diformat
-      let uangView      = document.getElementById('uangDiberikanView').value;
-      let uangDiberikan = parseInt(uangView.replace(/[^0-9]/g, "")) || 0;
+      document.getElementById("laku5").value  = laku5;
+      document.getElementById("laku20").value = laku20;
 
-      // HITUNG SISA
-      let sisa5  = awal5  - laku5  + tambah5;
-      let sisa20 = awal20 - laku20 + tambah20;
-      let sisa50 = awal50 - laku50 + tambah50;
+      // Pembayaran: hanya dari voucher laku
+      const bayar5  = laku5  * 4000;
+      const bayar20 = laku20 * 19000;
+      const total   = bayar5 + bayar20;
 
-      // HITUNG PENJUALAN
-      let jual5  = laku5  * 4000;
-      let jual20 = laku20 * 19000;
-      let jual50 = laku50 * 49000;
-      let total  = jual5 + jual20 + jual50;
+      document.getElementById("bayar5").value     = formatRupiah(bayar5);
+      document.getElementById("bayar20").value    = formatRupiah(bayar20);
+      document.getElementById("bayarTotal").value = formatRupiah(total);
 
-      // Hitung kembalian
-      let kembalian = uangDiberikan - total;
+      // Total jumlah voucher: Awal + Tambahan
+      const totalV5  = awal5  + tambah5;
+      const totalV20 = awal20 + tambah20;
 
-      // Ringkasan voucher
-      let html = `
-        <div class="hasil-row">
-          <span class="label">V5 - sisa</span>
-          <span>${sisa5} lembar</span>
-        </div>
-        <div class="hasil-row">
-          <span class="label">V5 - penjualan</span>
-          <span>Rp ${formatRupiah(jual5)}</span>
-        </div>
-        <div class="divider"></div>
-        <div class="hasil-row">
-          <span class="label">V20 - sisa</span>
-          <span>${sisa20} lembar</span>
-        </div>
-        <div class="hasil-row">
-          <span class="label">V20 - penjualan</span>
-          <span>Rp ${formatRupiah(jual20)}</span>
-        </div>
-        <div class="divider"></div>
-        <div class="hasil-row">
-          <span class="label">V50 - sisa</span>
-          <span>${sisa50} lembar</span>
-        </div>
-        <div class="hasil-row">
-          <span class="label">V50 - penjualan</span>
-          <span>Rp ${formatRupiah(jual50)}</span>
-        </div>
-        <div class="divider"></div>
-        <div class="hasil-row total">
-          <span class="label">TOTAL</span>
-          <span>Rp ${formatRupiah(total)}</span>
-        </div>
-      `;
-      document.getElementById('hasilVoucher').innerHTML = html;
-
-      // Panel uang & kembalian
-      document.getElementById('outTotal').textContent = "Rp " + formatRupiah(total);
-      document.getElementById('outUangDiberikan').textContent = "Rp " + formatRupiah(uangDiberikan);
-      document.getElementById('outKembalian').textContent = "Rp " + formatRupiah(Math.abs(kembalian));
-
-      let statusEl = document.getElementById('outStatus');
-      if (total === 0) {
-        statusEl.textContent = "Belum ada transaksi";
-        statusEl.className = "danger";
-      } else if (uangDiberikan === 0) {
-        statusEl.textContent = "Belum ada uang bayar";
-        statusEl.className = "danger";
-      } else if (kembalian < 0) {
-        statusEl.textContent = "Uang kurang Rp " + formatRupiah(-kembalian);
-        statusEl.className = "danger";
-      } else if (kembalian === 0) {
-        statusEl.textContent = "Pas, mantap ✅";
-        statusEl.className = "success";
-      } else {
-        statusEl.textContent = "Kembalian siap dikasih";
-        statusEl.className = "success";
-      }
+      document.getElementById("totalVoucher5").value  = totalV5;
+      document.getElementById("totalVoucher20").value = totalV20;
     }
 
     function resetForm() {
-      const ids = [
-        'awal5','laku5','tambah5',
-        'awal20','laku20','tambah20',
-        'awal50','laku50','tambah50'
-      ];
-      ids.forEach(id => document.getElementById(id).value = "0");
+      const idsEditable = ["awal5","awal20","sisa5","sisa20","tambah5","tambah20"];
+      idsEditable.forEach(id => document.getElementById(id).value = "0");
 
-      document.getElementById('uangDiberikanView').value = "0";
-
-      document.getElementById('hasilVoucher').innerHTML =
-        '<div class="tagline">Isi data di atas lalu tekan <strong>Hitung</strong>.</div>';
-
-      document.getElementById('outTotal').textContent = "Rp 0";
-      document.getElementById('outUangDiberikan').textContent = "Rp 0";
-      document.getElementById('outKembalian').textContent = "Rp 0";
-      let statusEl = document.getElementById('outStatus');
-      statusEl.textContent = "Belum dihitung";
-      statusEl.className = "danger";
+      document.getElementById("laku5").value  = "0";
+      document.getElementById("laku20").value = "0";
+      document.getElementById("bayar5").value     = "Rp 0";
+      document.getElementById("bayar20").value    = "Rp 0";
+      document.getElementById("bayarTotal").value = "Rp 0";
+      document.getElementById("totalVoucher5").value  = "0";
+      document.getElementById("totalVoucher20").value = "0";
     }
+
+    hitung();
   </script>
 </body>
 </html>
